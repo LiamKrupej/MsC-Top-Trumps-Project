@@ -18,6 +18,10 @@ public class Player {
 		return isactive;
 	}
 	
+	public void setActivity(boolean TorF) {
+		this.isactive = TorF;
+	}
+		
 	public void getTopCard() {
 		hand.get(0);
 		
