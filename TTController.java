@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+
 public class TTController {
 
 	private TTModel model;
@@ -8,8 +10,9 @@ public class TTController {
 		view = tView;
 	}
 
-	public void startGame() {
-
+	public void startGame() throws FileNotFoundException{
+		model.readCards();
+		model.shuffleDeck();
 	}
 	
 }
