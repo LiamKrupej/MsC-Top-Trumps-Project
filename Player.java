@@ -3,11 +3,13 @@ import java.util.ArrayList;
 public class Player {
 	private String name;
 	private boolean isactive;
-	ArrayList <Card> hand = new ArrayList<Card>();
+	private int playerNum;
+	ArrayList <cardAttributes> hand = new ArrayList<cardAttributes>();
 
-	public Player(String n, boolean TorF) {
+	public Player(String n, boolean TorF, int playerNum) {
 		this.name = n;
 		this.isactive = TorF;
+		this.playerNum = playerNum;
 	}
 
 	public String getPlayerName() {
@@ -18,26 +20,20 @@ public class Player {
 		return isactive;
 	}
 	
-	public void setActivity(boolean TorF) {
-		this.isactive = TorF;
-	}
-		
 	public void getTopCard() {
-		hand.get(0);
-		
+		hand.get(0);	
 	}
 
-	public void addToHand(Card card) {
+	public void addToHand(cardAttributes card) {
 		hand.add(card);
 	}
 		
 	public String printHand() {
 		String results = "";
-		for(Card c : hand) {
+		for(cardAttributes c : hand) {
 			results +=  c.toString() + "\n";	
 		}
 		return results;
 	}
     }
 		
-
