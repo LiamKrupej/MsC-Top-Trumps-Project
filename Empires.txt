@@ -36,3 +36,5 @@ Umayyad Dynasty		8	4	6	5	8
 United States		7	5	9	3	5
 Yugoslav Republic	4	3	6	1	4
 Zulu Kingdom		3	3	2	3	8
+Texan Empire		5	0	2	4	9
+Polish Empire 		6	7 	2	4	8
