@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class TTModel {
 
 	private  ArrayList<cardAttributes> Deck = new ArrayList<>();
-	ArrayList<Player> playerList = new ArrayList<>();
+	private ArrayList<Player> playerList = new ArrayList<>();
 	private int numOfPlayers = 0;
 
 	public TTModel() {
@@ -40,7 +40,7 @@ public class TTModel {
 		Player Three = new Player("Player 3", true, 3);
 		Player Four = new Player("Player 4", true, 4);
 		Player Five = new Player("Player 5", true, 5);
-		Player Six = new Player("Communal Pile", true, 6);
+		Player Six = new Player("Communal Pile", true, 0);
 		playerList.add(Six);
 		playerList.add(One);
 		playerList.add(Two);
@@ -81,8 +81,9 @@ public class TTModel {
 		int rmndr = Deck.size() % (numOfPlayers + 1);
 		int deckIndex = 0;
 		int LDP = 0;
+
 		for (int i = 0; i < DR; i++) {
-			for (int j = 1; j < numOfPlayers + 1; j++) {
+			for (int j = 1; j <= (numOfPlayers + 1); j++) {
 				playerList.get(j).hand.add(Deck.get(deckIndex));
 				deckIndex++;
 				LDP = j;
@@ -107,24 +108,48 @@ public class TTModel {
 	public void compareCards(int a) {
 		int winner = 0;
 		int playerInc = 0;
-		ArrayList<Player> activePlayers = new ArrayList<>();
+		ArrayList<Player> activePlayers = new ArrayList<Player>();
+		ArrayList<Player> currentHighest = new ArrayList<Player>();
+
+
 		for (int i = 1; i <= 5; i++) {
 			boolean addToList;
 			addToList = playerList.get(i).isPlayerActive();
-			
 			if (addToList == true) {
 				activePlayers.add(playerList.get(i));
-				
-
 			}
 		}
+
 
 		if (a == 1) {
 			for (int j = 0; j < activePlayers.size(); j++) {
-				System.out.print(activePlayers.get(j).hand.get(1).getSize());
+				// roundResults.add(activePlayers.get(j).getGeo());
+				System.out.println(String.format("%s has a card with size %01d", activePlayers.get(j).getPlayerName(), activePlayers.get(j).getGeo()));
 
-				// System.out.print(activePlayers.get(1).printHand());
+				if (j == 0) {
+					currentHighest.add(0, activePlayers.get(j));
+				} else if (j == 1) {
+					currentHighest.add(1, activePlayers.get(j));
+				}
+
+
+				if (activePlayers.get(j).getGeo() > currentHighest.get(0).getGeo()) {
+					currentHighest.add(1, currentHighest.get(0));
+					currentHighest.add(0, activePlayers.get(j));
+				}
+
 			}
+
+			if (currentHighest.get(0) == currentHighest.get(1)) {
+				System.out.println("There is a draw and the cards will be added to the communal pile");
+			} else {
+				System.out.println(String.format("%s has the highest card for this round, with a value of %01d", currentHighest.get(0).getPlayerName(), currentHighest.get(0).getGeo()));
+			}
+
 		}
 	}
+
+
+
+
 }
