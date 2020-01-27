@@ -92,7 +92,7 @@ public class TTModel {
 		if (rmndr != 0) {
 			for (int k = 0; k < rmndr; k++)
 				if (LDP == 5) {
-					LDP = 0;
+					LDP = 1;
 				}
 			playerList.get(LDP + 1).hand.add(Deck.get(deckIndex));
 		}
@@ -133,17 +133,125 @@ public class TTModel {
 				}
 
 
-				if (activePlayers.get(j).getGeo() > currentHighest.get(0).getGeo()) {
+				if (activePlayers.get(j).getGeo() >= currentHighest.get(0).getGeo()) {
 					currentHighest.add(1, currentHighest.get(0));
 					currentHighest.add(0, activePlayers.get(j));
 				}
 
 			}
 
-			if (currentHighest.get(0) == currentHighest.get(1)) {
+			if (currentHighest.get(0).getGeo() == currentHighest.get(1).getGeo()) {
 				System.out.println("There is a draw and the cards will be added to the communal pile");
 			} else {
 				System.out.println(String.format("%s has the highest card for this round, with a value of %01d", currentHighest.get(0).getPlayerName(), currentHighest.get(0).getGeo()));
+			}
+
+		}
+
+		if (a == 2) {
+			for (int j = 0; j < activePlayers.size(); j++) {
+				// roundResults.add(activePlayers.get(j).getGeo());
+				System.out.println(String.format("%s has a card with duration %01d", activePlayers.get(j).getPlayerName(), activePlayers.get(j).getDur()));
+
+				if (j == 0) {
+					currentHighest.add(0, activePlayers.get(j));
+				} else if (j == 1) {
+					currentHighest.add(1, activePlayers.get(j));
+				}
+
+
+				if (activePlayers.get(j).getDur() >= currentHighest.get(0).getDur()) {
+					currentHighest.add(1, currentHighest.get(0));
+					currentHighest.add(0, activePlayers.get(j));
+				}
+
+			}
+
+			if (currentHighest.get(0).getDur() == currentHighest.get(1).getDur()) {
+				System.out.println("There is a draw and the cards will be added to the communal pile");
+			} else {
+				System.out.println(String.format("%s has the highest card for this round, with a value of %01d", currentHighest.get(0).getPlayerName(), currentHighest.get(0).getDur()));
+			}
+
+		}
+
+		if (a == 3) {
+			for (int j = 0; j < activePlayers.size(); j++) {
+				// roundResults.add(activePlayers.get(j).getGeo());
+				System.out.println(String.format("%s has a card with population %01d", activePlayers.get(j).getPlayerName(), activePlayers.get(j).getPop()));
+
+				if (j == 0) {
+					currentHighest.add(0, activePlayers.get(j));
+				} else if (j == 1) {
+					currentHighest.add(1, activePlayers.get(j));
+				}
+
+
+				if (activePlayers.get(j).getPop() >= currentHighest.get(0).getPop()) {
+					currentHighest.add(1, currentHighest.get(0));
+					currentHighest.add(0, activePlayers.get(j));
+				}
+
+			}
+
+			if (currentHighest.get(0).getPop() == currentHighest.get(1).getPop()) {
+				System.out.println("There is a draw and the cards will be added to the communal pile");
+			} else {
+				System.out.println(String.format("%s has the highest card for this round, with a value of %01d", currentHighest.get(0).getPlayerName(), currentHighest.get(0).getPop()));
+			}
+
+		}
+
+		if (a == 4) {
+			for (int j = 0; j < activePlayers.size(); j++) {
+				// roundResults.add(activePlayers.get(j).getGeo());
+				System.out.println(String.format("%s has a card with antiquity %01d", activePlayers.get(j).getPlayerName(), activePlayers.get(j).getAnt()));
+
+				if (j == 0) {
+					currentHighest.add(0, activePlayers.get(j));
+				} else if (j == 1) {
+					currentHighest.add(1, activePlayers.get(j));
+				}
+
+
+				if (activePlayers.get(j).getAnt() >= currentHighest.get(0).getAnt()) {
+					currentHighest.add(1, currentHighest.get(0));
+					currentHighest.add(0, activePlayers.get(j));
+				}
+
+			}
+
+			if (currentHighest.get(0).getAnt() == currentHighest.get(1).getAnt()) {
+				System.out.println("There is a draw and the cards will be added to the communal pile");
+			} else {
+				System.out.println(String.format("%s has the highest card for this round, with a value of %01d", currentHighest.get(0).getPlayerName(), currentHighest.get(0).getAnt()));
+			}
+
+		}
+
+		if (a == 5) {
+			for (int j = 0; j < activePlayers.size(); j++) {
+				// roundResults.add(activePlayers.get(j).getGeo());
+				System.out.println(String.format("%s has a card with cool factor %01d", activePlayers.get(j).getPlayerName(), activePlayers.get(j).getCool()));
+
+				if (j == 0) {
+					currentHighest.add(0, activePlayers.get(j));
+				} else if (j == 1) {
+					currentHighest.add(1, activePlayers.get(j));
+				}
+
+
+				if (activePlayers.get(j).getCool() >= currentHighest.get(0).getCool()) {
+					currentHighest.add(1, currentHighest.get(0));
+					currentHighest.add(0, activePlayers.get(j));
+				}
+
+			}
+
+			if (currentHighest.get(0).getCool() == currentHighest.get(1).getCool()) {
+				System.out.println("There is a draw and the cards will be added to the communal pile");
+			} else {
+				System.out.println(String.format("%s has the highest card for this round, with a value of %01d", currentHighest.get(0).getPlayerName(), currentHighest.get(0).getCool()));
 			}
 
 		}
