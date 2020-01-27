@@ -40,6 +40,31 @@ public class Player {
 		}
 		return results;
 	}
-    }
-		
 
+	public int getGeo() {
+		return this.hand.get(0).getSize();
+	}
+
+	public int getDur() {
+		return this.hand.get(0).getDuration();
+	}
+
+	public int getPop() {
+		return this.hand.get(0).getPopulation();
+	}
+
+	public int getAnt() {
+		return this.hand.get(0).getAntiquity();
+	}
+
+	public int getCool() {
+		return this.hand.get(0).getCoolFactor();
+	}
+
+
+
+
+
+
+}
+	
