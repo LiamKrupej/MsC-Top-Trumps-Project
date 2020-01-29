@@ -3,7 +3,7 @@ import java.util.Scanner;
 // reads human players chosen attribute //
 public class PlayerSelect extends ExampleClass{ 
 	private String choice = "";
-	public String decideOnCategory() {
+	public String pickAnAttribute() {
         setPlayableChoices();
         Scanner input = new Scanner(System.in);
         
@@ -11,7 +11,7 @@ public class PlayerSelect extends ExampleClass{
 		System.out.println(output);
 	
 		choice = input.nextLine();
-        choice = decideOnCategory();
+        choice = pickAnAttribute();
 		}
 }
 		input.close();
