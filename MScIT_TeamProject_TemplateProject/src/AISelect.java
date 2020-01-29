@@ -9,9 +9,9 @@ public class AISelect extends ExampleClass{ // referring to third class
 	}
 	public String pickAnAttribute() {
 		
-		int number_of_categories = cardDeck.get(0);
+		int number_of_attributes = cardDeck.get(0);
 		
-		int choiceNumber = r.nextInt(number_of_categories); //nextInt used to generate random int value
+		int choiceNumber = r.nextInt(number_of_attributes); //nextInt used to generate random int value
 		
 		choice = cardDeck.get(0)[choiceNumber]; 
 		
