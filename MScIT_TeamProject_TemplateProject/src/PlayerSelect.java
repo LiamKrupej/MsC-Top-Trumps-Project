@@ -26,7 +26,7 @@ public class PlayerSelect extends ExampleClass{
 	   if (i != playableChoices.size()-1) {
 			output += ", " + playableChoices.get(i);
 		} else {
-			output += " OR " + playableChoices.get(i) + ")";
+			output += " Or " + playableChoices.get(i) + ")";
 		}
 	}
 	return output;
