@@ -7,6 +7,11 @@ public class TTModel {
 	private ArrayList<cardAttributes> Deck = new ArrayList<>();
 	private ArrayList<Player> playerList = new ArrayList<>();
 	private int numOfPlayers = 0;
+	int winner = 0;
+	ArrayList<Player> activePlayers = new ArrayList<Player>();
+	ArrayList<Player> currentHighest = new ArrayList<Player>();
+	int gamewinner = 0;
+	boolean gameactive = true;
 
 	public TTModel() {
 
@@ -106,11 +111,7 @@ public class TTModel {
 	}
 
 	public void compareCards(int a) {
-		int winner = 0;
 		int playerInc = 0;
-		ArrayList<Player> activePlayers = new ArrayList<Player>();
-		ArrayList<Player> currentHighest = new ArrayList<Player>();
-
 		for (int i = 1; i <= 5; i++) {
 			boolean addToList;
 			addToList = playerList.get(i).isPlayerActive();
@@ -258,4 +259,28 @@ public class TTModel {
 
 		}
 	}
+
+	public void loseCondition() {
+		for (int i = 0; i <= activePlayers.size(); i++) {
+			if (activePlayers.get(i).hand.get(0) == null) {
+				activePlayers.get(i).setPlayerActivity(false);
+			}
+		}
+
+	}
+	
+	public void findWinner () {
+		for (int i = 0; i <= activePlayers.size(); i ++) {
+			if (activePlayers.get(i).hand.size() == 40) {
+				gamewinner = activePlayers.get(i).getPlayerNum();					
+			}
+		}
+		
+		if (gamewinner != 0) {
+			gameactive = false;
+			
+		}
+		
+	}
+	
 }
