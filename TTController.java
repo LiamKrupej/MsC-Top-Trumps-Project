@@ -30,6 +30,7 @@ public class TTController {
 					gameActive =checkWinConditions();
 
 				} else if (model.isPlayerActive(j) == true) {
+					System.out.println("IF IM ACTIVE WHY AM I NOT RUNNING");
 					numActive = model.getActivePlayerNum(model.getActivePlayers());
 					model.compareCards(model.aiChoice(j, model.getActivePlayers()), model.getActivePlayers());
 					gameActive = checkWinConditions();
@@ -37,7 +38,7 @@ public class TTController {
 					gameActive = checkWinConditions();
 				}
 			} 
-		} while(gameActive == true);
+		} while(gameActive == true || numActive > 1);
 
 		System.out.println("Player " + model.getWinner() + " has won the game");
 	}

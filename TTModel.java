@@ -329,11 +329,10 @@ public class TTModel {
 		if (d == 0) {
 			int numComPile = playerList.get(0).hand.size();		// gets size of current communal pile hand
 			System.out.println(numComPile + " NUMBER OF CARDS IN COMMUNAL PILE*******************************************");
-			for (int k = 0; k < numComPile; k++) {				// runs through every index of communal pile hand
+			for (int k = 0; (k <= numComPile) && (numComPile != 0); k++) {									// runs through every index of communal pile hand
 				if (activePlayers.get(0).hand.isEmpty() == false) {
-					playerList.get(w).addToHand(activePlayers.get(0).getTopCard()); // and adds to players hand list
-					activePlayers.get(0).removeTopCard();		// ** being reached but not doing this and previous line???????
-					loseCondition(activePlayers);
+					playerList.get(w).addToHand(playerList.get(0).getTopCard()); // and adds to players hand list
+					playerList.get(0).removeTopCard();							// ** being reached but not doing this and previous line???????
 					System.out.println("LALALALALALALALALALALALALALA THIS PART IS BEING REACHED LALALALALALALALALA" + activePlayers.get(0).hand.isEmpty());
 				}
 				numComPile = playerList.get(0).hand.size();
