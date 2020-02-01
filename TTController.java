@@ -23,7 +23,8 @@ public class TTController {
 
 		do {
 			numActive = model.getActivePlayerNum(model.getActivePlayers()); 
-			for (int j = 1; j <= numActive; j++) { 							// incorrect alogrithm. currently not running all players.
+			int highestRemainingPlayer = model.getHighestActivePlayer();
+			for (int j = 1; j <= highestRemainingPlayer; j++) { 							// incorrect alogrithm. currently not running all players.
 				if ((j == 1) && (model.isPlayerActive(j) == true)) {		// j needs to run through active player numbers			
 					keyboardInput();										// not increment through index of activeplayers
 					gameActive =checkWinConditions();

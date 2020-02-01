@@ -325,7 +325,7 @@ public class TTModel {
 
 		int numberActive = activePlayers.size();		// size of current player list initialised for ease of use
 		loseCondition(activePlayers);
-		System.out.println("DRAW VALUE IS " + d + "****************************************");
+
 		if (d == 0) {
 			int numComPile = playerList.get(0).hand.size();		// gets size of current communal pile hand
 			System.out.println(numComPile + " NUMBER OF CARDS IN COMMUNAL PILE*******************************************");
@@ -433,6 +433,19 @@ public class TTModel {
 		} else {
 			return false;
 		}
+	}
+
+	public int getHighestActivePlayer() {
+		int biggest = 0;
+		for (int i = 1; ((i < playerList.size()) && (playerList.get(i).isPlayerActive() == true)); i++){
+			if (playerList.get(i).getPlayerNum() > biggest) {
+				biggest = playerList.get(i).getPlayerNum();
+			}
+		}
+		System.out.println(biggest + " THIS IS THE BIGGGGGGESSSSSSSSSTTTTTTT PLAYER 5 IS ACTIVE = " + playerList.get(5).isPlayerActive());
+
+		return biggest;
+
 	}
 
 
