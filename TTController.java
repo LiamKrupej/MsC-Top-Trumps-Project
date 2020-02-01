@@ -22,15 +22,12 @@ public class TTController {
 		model.dealCards();
 
 		do {
-			numActive = model.getActivePlayerNum(model.getActivePlayers());
-			for (int j = 1; j <= numActive; j++) { 
-				System.out.println(" J IS " + j + "*********");
-				if ((j == 1) && (model.isPlayerActive(j) == true)) {				
-					keyboardInput();
+			numActive = model.getActivePlayerNum(model.getActivePlayers()); 
+			for (int j = 1; j <= numActive; j++) { 							// incorrect alogrithm. currently not running all players.
+				if ((j == 1) && (model.isPlayerActive(j) == true)) {		// j needs to run through active player numbers			
+					keyboardInput();										// not increment through index of activeplayers
 					gameActive =checkWinConditions();
-
 				} else if (model.isPlayerActive(j) == true) {
-					System.out.println("IF IM ACTIVE WHY AM I NOT RUNNING");
 					numActive = model.getActivePlayerNum(model.getActivePlayers());
 					model.compareCards(model.aiChoice(j, model.getActivePlayers()), model.getActivePlayers());
 					gameActive = checkWinConditions();
