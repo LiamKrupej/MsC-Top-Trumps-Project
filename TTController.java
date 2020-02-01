@@ -18,10 +18,23 @@ public class TTController {
 		model.createPlayers();
 		model.numOfActive();
 		model.dealCards();
-		keyboardInput();
-		
-		
-		
+
+		do {
+			int numActive = model.getActivePlayerNum(model.getActivePlayers());
+			for (int j = 1; j <= numActive; j++) { 
+				if (j == 1) {
+					keyboardInput();
+					model.loseCondition(model.getActivePlayers());
+					model.findWinner(model.getActivePlayers());
+				} else {
+					model.compareCards(model.aiChoice(j, model.getActivePlayers()), model.getActivePlayers());
+					model.loseCondition(model.getActivePlayers());
+					model.findWinner(model.getActivePlayers());
+				}
+			}
+		} while(model.isGameActive() == true);
+
+		System.out.println("Player " + model.getWinner() + " has won the game");
 	}
 	
 	public void keyboardInput() {
@@ -30,7 +43,7 @@ public class TTController {
 		Scanner s = new Scanner(System.in);
 		int inputInt = s.nextInt();
 		s.nextLine();
-		model.compareCards(inputInt);
+		model.compareCards(inputInt, model.getActivePlayers());
 		
 	}
 	
