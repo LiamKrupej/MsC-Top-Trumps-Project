@@ -325,19 +325,27 @@ public class TTModel {
 
 		if (d == 1) {																// first if loop runs only if draw
 			for (int i = 0; i < numberActive; i++) {								// runs for ever currently active player
+				numberActive = activePlayers.size();							
 				playerList.get(0).addToHand(activePlayers.get(i).getTopCard());		// removes first card from active player
+				loseCondition(activePlayers);		
 			}																		// and adds to communal pile player object
 		} else {
 			for (int j = 0; j < numberActive; j++) {								// if not a draw
-				playerList.get(w).addToHand(activePlayers.get(j).getTopCard());		// every player, including winners cards are added at end of list
+				numberActive = activePlayers.size();
+				playerList.get(w).addToHand(activePlayers.get(j).getTopCard());		// every player, including winners cards are added at end of list				
 				activePlayers.get(j).removeTopCard();								// and the top card is removed from all players
+				loseCondition(activePlayers);
 			}
 
 			// the next section runs for every player won round to add all cards which are in communal pile
 
 			int numComPile = playerList.get(0).hand.size();		// gets size of current communal pile hand
 			for (int k = 0; k < numComPile; k++) {				// runs through every index of communal pile hand
-				playerList.get(w).addToHand(activePlayers.get(0).getTopCard());		// and adds to players hand list
+				if (activePlayers.get(0).hand.isEmpty() == false) {
+					playerList.get(w).addToHand(activePlayers.get(0).getTopCard());
+					activePlayers.get(0).removeTopCard();		// and adds to players hand list
+					loseCondition(activePlayers);
+				}
 			}
 		}
 
@@ -382,7 +390,7 @@ public class TTModel {
 
 	public void loseCondition(ArrayList<Player> activePlayers) {
 		for (int i = 0; i < activePlayers.size(); i++) {
-			if (activePlayers.get(i).hand.get(0) == null) {
+			if (activePlayers.get(i).hand.isEmpty() == true) {
 				activePlayers.get(i).setPlayerActivity(false);
 			}
 		}
