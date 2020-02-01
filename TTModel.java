@@ -104,9 +104,12 @@ public class TTModel {
 	}
 
 	public String getTopCard() {
-		String s = null;
-		s = playerList.get(1).hand.get(0).toString();
-		return s;
+		if (playerList.get(1).hand.isEmpty() == false) {
+			String s = null;
+			s = playerList.get(1).hand.get(0).toString();
+			return s;
+		}
+		return null; 
 	}
 
 	public ArrayList<Player> getActivePlayers() {
@@ -326,7 +329,8 @@ public class TTModel {
 		if (d == 1) {																// first if loop runs only if draw
 			for (int i = 0; i < numberActive; i++) {								// runs for ever currently active player
 				numberActive = activePlayers.size();							
-				playerList.get(0).addToHand(activePlayers.get(i).getTopCard());		// removes first card from active player
+				playerList.get(0).addToHand(activePlayers.get(i).getTopCard());
+				activePlayers.get(i).removeTopCard();								// removes first card from active player
 				loseCondition(activePlayers);		
 			}																		// and adds to communal pile player object
 		} else {
