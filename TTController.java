@@ -23,22 +23,21 @@ public class TTController {
 
 		do {
 			numActive = model.getActivePlayerNum(model.getActivePlayers());
-			System.out.println(numActive + " ACTIVE PLAYERS***");
 			for (int j = 1; j <= numActive; j++) { 
 				System.out.println(" J IS " + j + "*********");
 				if ((j == 1) && (model.isPlayerActive(j) == true)) {				
 					keyboardInput();
-					checkWinConditions();
+					gameActive =checkWinConditions();
 
 				} else if (model.isPlayerActive(j) == true) {
 					numActive = model.getActivePlayerNum(model.getActivePlayers());
 					model.compareCards(model.aiChoice(j, model.getActivePlayers()), model.getActivePlayers());
-					checkWinConditions();
+					gameActive = checkWinConditions();
 				} else {
-					checkWinConditions();
+					gameActive = checkWinConditions();
 				}
-			}
-		} while(model.isGameActive() == true);
+			} 
+		} while(gameActive == true);
 
 		System.out.println("Player " + model.getWinner() + " has won the game");
 	}

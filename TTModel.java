@@ -310,7 +310,6 @@ public class TTModel {
 			}
 
 		}
-		System.out.println(playerList.get(0).printHand() + " *start* ");
 		addWinnerCards(winner, draw, activePlayers);
 		return winner;
 	}
@@ -326,22 +325,25 @@ public class TTModel {
 
 		int numberActive = activePlayers.size();		// size of current player list initialised for ease of use
 		loseCondition(activePlayers);
+		System.out.println("DRAW VALUE IS " + d + "****************************************");
 		if (d == 0) {
 			int numComPile = playerList.get(0).hand.size();		// gets size of current communal pile hand
-			System.out.println
+			System.out.println(numComPile + " NUMBER OF CARDS IN COMMUNAL PILE*******************************************");
 			for (int k = 0; k < numComPile; k++) {				// runs through every index of communal pile hand
 				if (activePlayers.get(0).hand.isEmpty() == false) {
-					playerList.get(w).addToHand(activePlayers.get(0).getTopCard());
-					activePlayers.get(0).removeTopCard();		// and adds to players hand list
+					playerList.get(w).addToHand(activePlayers.get(0).getTopCard()); // and adds to players hand list
+					activePlayers.get(0).removeTopCard();		// ** being reached but not doing this and previous line???????
 					loseCondition(activePlayers);
+					System.out.println("LALALALALALALALALALALALALALA THIS PART IS BEING REACHED LALALALALALALALALA" + activePlayers.get(0).hand.isEmpty());
 				}
+				numComPile = playerList.get(0).hand.size();
 			}
+			System.out.println(numComPile + " NUMBER OF CARDS IN COMMUNAL PILE*******************************************");
 		}
 
 
 		if (d == 1) {
-			numberActive = activePlayers.size();	
-			System.out.print("Add winner cards size " + numberActive);								// first if loop runs only if draw							
+			numberActive = activePlayers.size();									// first if loop runs only if draw							
 			for (int i = 0; i < numberActive; i++) {								// runs for ever currently active player							
 				playerList.get(0).addToHand(activePlayers.get(i).getTopCard());
 				activePlayers.get(i).removeTopCard();								// removes first card from active player
