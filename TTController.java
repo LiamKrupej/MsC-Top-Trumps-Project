@@ -7,6 +7,7 @@ public class TTController {
 	private TTModel model;
 	private TTView	view;
 	private int numActive;
+	private boolean gameActive = true;
 
 	public TTController(TTModel tModel, TTView tView) {
 		model = tModel;
@@ -25,15 +26,15 @@ public class TTController {
 			System.out.println(numActive + " ACTIVE PLAYERS***");
 			for (int j = 1; j <= numActive; j++) { 
 				System.out.println(" J IS " + j + "*********");
-				if (j == 1) {				
-					checkWinConditions();
+				if ((j == 1) && (model.isPlayerActive(j) == true)) {				
 					keyboardInput();
 					checkWinConditions();
 
-				} else {
-					checkWinConditions();
+				} else if (model.isPlayerActive(j) == true) {
 					numActive = model.getActivePlayerNum(model.getActivePlayers());
 					model.compareCards(model.aiChoice(j, model.getActivePlayers()), model.getActivePlayers());
+					checkWinConditions();
+				} else {
 					checkWinConditions();
 				}
 			}
@@ -52,10 +53,11 @@ public class TTController {
 		
 	}
 
-	public void checkWinConditions() {
+	public boolean checkWinConditions() {
 		model.loseCondition(model.getActivePlayers());
-		model.findWinner(model.getActivePlayers());
+		gameActive = model.findWinner(model.getActivePlayers());
 		numActive = model.getActivePlayerNum(model.getActivePlayers());
+		return gameActive;
 	}
 	
 }

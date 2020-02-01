@@ -325,25 +325,10 @@ public class TTModel {
 	public void addWinnerCards(int w, int d, ArrayList<Player> activePlayers) {
 
 		int numberActive = activePlayers.size();		// size of current player list initialised for ease of use
-
-		if (d == 1) {																// first if loop runs only if draw
-			for (int i = 0; i < numberActive; i++) {								// runs for ever currently active player
-				numberActive = activePlayers.size();							
-				playerList.get(0).addToHand(activePlayers.get(i).getTopCard());
-				activePlayers.get(i).removeTopCard();								// removes first card from active player
-				loseCondition(activePlayers);		
-			}																		// and adds to communal pile player object
-		} else {
-			for (int j = 0; j < numberActive; j++) {								// if not a draw
-				numberActive = activePlayers.size();
-				playerList.get(w).addToHand(activePlayers.get(j).getTopCard());		// every player, including winners cards are added at end of list				
-				activePlayers.get(j).removeTopCard();								// and the top card is removed from all players
-				loseCondition(activePlayers);
-			}
-
-			// the next section runs for every player won round to add all cards which are in communal pile
-
+		loseCondition(activePlayers);
+		if (d == 0) {
 			int numComPile = playerList.get(0).hand.size();		// gets size of current communal pile hand
+			System.out.println
 			for (int k = 0; k < numComPile; k++) {				// runs through every index of communal pile hand
 				if (activePlayers.get(0).hand.isEmpty() == false) {
 					playerList.get(w).addToHand(activePlayers.get(0).getTopCard());
@@ -351,6 +336,27 @@ public class TTModel {
 					loseCondition(activePlayers);
 				}
 			}
+		}
+
+
+		if (d == 1) {
+			numberActive = activePlayers.size();	
+			System.out.print("Add winner cards size " + numberActive);								// first if loop runs only if draw							
+			for (int i = 0; i < numberActive; i++) {								// runs for ever currently active player							
+				playerList.get(0).addToHand(activePlayers.get(i).getTopCard());
+				activePlayers.get(i).removeTopCard();								// removes first card from active player
+				loseCondition(activePlayers);
+				numberActive = activePlayers.size();		
+			}																		// and adds to communal pile player object
+		} else {
+			numberActive = activePlayers.size();
+			for (int j = 0; j < numberActive; j++) {								// if not a draw			
+				playerList.get(w).addToHand(activePlayers.get(j).getTopCard());		// every player, including winners cards are added at end of list				
+				activePlayers.get(j).removeTopCard();								// and the top card is removed from all players
+				loseCondition(activePlayers);
+				numberActive = activePlayers.size();
+			}
+
 		}
 
 		System.out.println("*communal pile cards*" + playerList.get(0).printHand() + " *end communal pile* ");
@@ -396,12 +402,13 @@ public class TTModel {
 		for (int i = 0; i < activePlayers.size(); i++) {
 			if (activePlayers.get(i).hand.isEmpty() == true) {
 				activePlayers.get(i).setPlayerActivity(false);
+				activePlayers.remove(i);
 			}
 		}
 
 	}
 
-	public void findWinner (ArrayList<Player> activePlayers) {
+	public boolean findWinner (ArrayList<Player> activePlayers) {
 		for (int i = 0; i < activePlayers.size(); i ++) {
 			if (activePlayers.get(i).hand.size() == 40) {
 				gameWinner = activePlayers.get(i).getPlayerNum();					
@@ -411,10 +418,20 @@ public class TTModel {
 		if (gameWinner != 0) {
 			gameActive = false;
 		}
+
+		return gameActive;
 	}
 
 	public int getWinner() {
 		return gameWinner;
+	}
+
+	public boolean isPlayerActive(int p) {
+		if (playerList.get(p).isPlayerActive() == true) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 
