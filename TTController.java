@@ -6,6 +6,8 @@ public class TTController {
 
 	private TTModel model;
 	private TTView	view;
+	private int numActive;
+	private boolean gameActive = true;
 
 	public TTController(TTModel tModel, TTView tView) {
 		model = tModel;
@@ -18,10 +20,28 @@ public class TTController {
 		model.createPlayers();
 		model.numOfActive();
 		model.dealCards();
-		keyboardInput();
-		
-		
-		
+
+		do {
+			numActive = model.getActivePlayerNum(model.getActivePlayers()); 
+			int highestRemainingPlayer = model.getHighestActivePlayer();
+			for (int j = 1; j <= highestRemainingPlayer ; j++) { 							// incorrect alogrithm. currently not running all players.
+				if ((j == 1) && (model.isPlayerActive(j) == true)) {		// j needs to run through active player numbers			
+					keyboardInput();										// not increment through index of activeplayers
+					gameActive =checkWinConditions();
+					highestRemainingPlayer = model.getHighestActivePlayer();
+				} else if ((j != 1) && (model.isPlayerActive(j)) == true) {
+					numActive = model.getActivePlayerNum(model.getActivePlayers());
+					model.compareCards(model.aiChoice(j, model.getActivePlayers()), model.getActivePlayers());
+					gameActive = checkWinConditions();
+					highestRemainingPlayer = model.getHighestActivePlayer();
+				} else {
+					gameActive = checkWinConditions();
+					highestRemainingPlayer = model.getHighestActivePlayer();
+				}
+			} 
+		} while(gameActive == true || numActive > 1);
+
+		System.out.println("Player " + model.getWinner() + " has won the game");
 	}
 	
 	public void keyboardInput() {
@@ -30,8 +50,15 @@ public class TTController {
 		Scanner s = new Scanner(System.in);
 		int inputInt = s.nextInt();
 		s.nextLine();
-		model.compareCards(inputInt);
+		model.compareCards(inputInt, model.getActivePlayers());
 		
+	}
+
+	public boolean checkWinConditions() {
+		model.loseCondition(model.getActivePlayers());
+		gameActive = model.findWinner(model.getActivePlayers());
+		numActive = model.getActivePlayerNum(model.getActivePlayers());
+		return gameActive;
 	}
 	
 }

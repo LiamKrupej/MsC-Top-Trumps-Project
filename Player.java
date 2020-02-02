@@ -40,10 +40,6 @@ public class Player {
 		}
 		return results;
 	}
-	
-	public String getName() {
-		return this.hand.get(0).getName();
-	}
 
 	public int getGeo() {
 		return this.hand.get(0).getSize();
@@ -64,6 +60,21 @@ public class Player {
 	public int getCool() {
 		return this.hand.get(0).getCoolFactor();
 	}
-    }
-		
 
+	public String getCardName() {
+		return String.format(this.hand.get(0).getNameFirst() + " " + this.hand.get(0).getNameLast());
+	}
+
+	public cardAttributes getTopCard() {
+		return this.hand.get(0);
+	}
+
+	public void removeTopCard() {
+		this.hand.remove(0);
+	}
+
+
+
+
+}
+	
