@@ -1,4 +1,5 @@
-  
+package commandline;
+
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
@@ -60,5 +61,4 @@ public class TTController {
 		numActive = model.getActivePlayerNum(model.getActivePlayers());
 		return gameActive;
 	}
-	
-}
+}	

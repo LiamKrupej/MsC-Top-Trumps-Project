@@ -1,3 +1,4 @@
+package commandline;
 public class cardAttributes {
 
     private String NameFirst;
@@ -19,8 +20,6 @@ public class cardAttributes {
         this.CoolFactor = CoolFactor;
 
     }
-    
-    public String getName() { return getNameFirst() + " " + getNameLast(); }
 
     public String getNameFirst() { return NameFirst; }
 
@@ -42,7 +41,6 @@ public class cardAttributes {
                 this.getNameFirst(), this.getNameLast(), this.getSize(), this.getDuration(), this.getPopulation(), this.getAntiquity(), this.getCoolFactor());
 
  }
-    
-    
-
 }
+    
+    

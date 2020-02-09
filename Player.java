@@ -1,11 +1,18 @@
+package commandline;
 import java.util.ArrayList;
 
+/*
+	The player object holds all of the information relating to each game player
+	This includes the player name, their game active state, a player number and an array list containing their hand
+	it also includes a number of getter and setters for these values
+*/
 public class Player {
 	private String name;
 	private boolean isactive;
 	private int PlayerNum = 0;
 	ArrayList <cardAttributes> hand = new ArrayList<cardAttributes>();
 
+	// each player object is constructed with a name, an active state and a player number
 	public Player(String n, boolean TorF, int PN) {
 		this.PlayerNum = PN; 
 		this.name = n;
@@ -77,4 +84,3 @@ public class Player {
 
 
 }
-	
