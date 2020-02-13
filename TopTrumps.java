@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import commandline.TopTrumpsCLIApplication;
 
@@ -9,17 +10,17 @@ import online.TopTrumpsOnlineApplication;
 public class TopTrumps {
 
 	/** This is the main class for the TopTrumps Applications 
-	 * @throws FileNotFoundException */
-	public static void main(String[] args) throws FileNotFoundException {
+	 * @throws IOException */
+	public static void main(String[] args) throws IOException {
 		
 		System.out.println("--------------------");
 		System.out.println("--- Top Trumps   ---");
 		System.out.println("--------------------");
 		
 		// command line switches
-		boolean onlineMode = true;
-		boolean commandLineMode = false;
-		boolean printTestLog = false;
+		boolean onlineMode = false;
+		boolean commandLineMode = true;
+		boolean printTestLog = true;
 		
 		// check the command line for what switches are active
 		for (String arg : args) {
