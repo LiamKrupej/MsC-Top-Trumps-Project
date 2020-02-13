@@ -1,6 +1,5 @@
 package commandline;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -18,8 +17,6 @@ public class TopTrumpsCLIApplication {
 	
 	public static void main(String[] args) throws IOException {
 
-
-		boolean gameCompleted = false;
 		
 		boolean writeGameLogsToFile = false; // Should we write game logs to file?
 		if (args[0].equalsIgnoreCase("true")) writeGameLogsToFile=true; // Command line selection

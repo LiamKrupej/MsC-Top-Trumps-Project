@@ -21,9 +21,11 @@ public class TTController {
 	public void startGame(boolean testLog) throws IOException{
 		TestLog log = new TestLog();
 		model.readCards();
+		
 			if (testLog == true) {
 				log.printInitialDeck(model.printCompleteDeck());
 			}
+			
 		model.shuffleDeck();
 		
 			if (testLog == true) {
@@ -39,6 +41,7 @@ public class TTController {
 				for (int i = 0; i < model.getActivePlayerNum(model.getActivePlayers()); i++) {
 					log.printPlayerHands(model.getPlayerHand(model.getActivePlayers(), i), (i+1));
 				}
+				log.playerHandsSurroundOut();
 			}
 		
 		numActive = model.getActivePlayerNum(model.getActivePlayers());
@@ -51,6 +54,12 @@ public class TTController {
 			numActive = model.getActivePlayerNum(model.getActivePlayers()); 
 			int highestRemainingPlayer = model.getHighestActivePlayer();
 			
+			if (testLog == true) {
+				log.topCardsSurround(roundNumber);
+				for (int i = 0; i < model.getActivePlayerNum(model.getActivePlayers()); i++) {
+					log.printTopCards(model.getTopCard(model.getPlayerNum(model.getActivePlayers(), i)), model.getPlayerNum(model.getActivePlayers(), i));
+				}
+			}
 		
 				System.out.println("ROUND " + roundNumber);
 				
@@ -70,6 +79,10 @@ public class TTController {
 				} else {
 					gameActive = checkWinConditions();
 					highestRemainingPlayer = model.getHighestActivePlayer();
+				}
+				
+				if ((model.getLastRoundWinner(model.getActivePlayers()) == 0) && (testLog == true)) {
+					log.printCommunalPile(model.getCommunalPile(), roundNumber);
 				}
 				
 				if ((model.getLastRoundWinner(model.getActivePlayers()) != j) && (model.getLastRoundWinner(model.getActivePlayers()) != 0)) {

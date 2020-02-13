@@ -128,7 +128,7 @@ public class TTModel {
 	}
 
 	// get top card returns a read out of the players next card to provide visibility for attribute selection
-	public String getTopCard( int p) {
+	public String getTopCard(int p) {
 		if (playerList.get(p).hand.isEmpty() == false) {
 			String s = null;
 			s = playerList.get(p).hand.get(0).toString();
@@ -473,11 +473,6 @@ public class TTModel {
 	// method for finding highest player number still active in the game, used in conditional loop in controller
 	public int getHighestActivePlayer() {
 		int biggest = 0;
-//		System.out.println("Player " + playerList.get(1).getPlayerNum() +  playerList.get(1).isPlayerActive());
-//		System.out.println("Player " + playerList.get(2).getPlayerNum() +  playerList.get(2).isPlayerActive());
-//		System.out.println("Player " + playerList.get(3).getPlayerNum() +  playerList.get(3).isPlayerActive());
-//		System.out.println("Player " + playerList.get(4).getPlayerNum() +  playerList.get(4).isPlayerActive());
-//		System.out.println("Player " + playerList.get(5).getPlayerNum() +  playerList.get(5).isPlayerActive());
 
 		for (int i = 1; i < playerList.size(); i++){
 			if (playerList.get(i).isPlayerActive() == true) {
@@ -496,5 +491,17 @@ public class TTModel {
 
 	public int getLastRoundWinner(ArrayList<Player> activePlayers) {
 		return playerList.get(lastRoundWinner).getPlayerNum();
+	}
+	
+	public String getCommunalPile() {
+		return playerList.get(0).printHand();
+	}
+	
+	public int getPlayerNum(ArrayList<Player> activePlayers, int p) {
+		return activePlayers.get(p).getPlayerNum();
+	}
+	
+	public String getRoundWinner() {
+		return String.valueOf(lastRoundWinner);
 	}
 }
