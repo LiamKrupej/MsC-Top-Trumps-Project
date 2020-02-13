@@ -1,6 +1,8 @@
 package commandline;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Random;
 import java.util.Scanner;
 
 public class TTController {
@@ -9,44 +11,85 @@ public class TTController {
 	private TTView	view;
 	private int numActive;
 	private boolean gameActive = true;
+	private boolean gameCompleted = false;
 
 	public TTController(TTModel tModel, TTView tView) {
 		model = tModel;
 		view = tView;
 	}
 
-	public void startGame() throws FileNotFoundException{
+	public void startGame(boolean testLog) throws IOException{
+		TestLog log = new TestLog();
 		model.readCards();
+			if (testLog == true) {
+				log.printInitialDeck(model.printCompleteDeck());
+			}
 		model.shuffleDeck();
+		
+			if (testLog == true) {
+				log.printShuffledDeck(model.printShuffledDeck());
+			}
+			
 		model.createPlayers();
 		model.numOfActive();
 		model.dealCards();
-
+		
+			if (testLog == true) {
+				log.playerHandsSurround();
+				for (int i = 0; i < model.getActivePlayerNum(model.getActivePlayers()); i++) {
+					log.printPlayerHands(model.getPlayerHand(model.getActivePlayers(), i), (i+1));
+				}
+			}
+		
+		numActive = model.getActivePlayerNum(model.getActivePlayers());
+		int roundNumber = 1;
+		Random gameStarter = new Random();
+		int playerStarts = (gameStarter.nextInt(numActive) + 1);
+		int j = playerStarts;	
 		do {
+
 			numActive = model.getActivePlayerNum(model.getActivePlayers()); 
 			int highestRemainingPlayer = model.getHighestActivePlayer();
-			for (int j = 1; j <= highestRemainingPlayer ; j++) { 							// incorrect alogrithm. currently not running all players.
-				if ((j == 1) && (model.isPlayerActive(j) == true)) {		// j needs to run through active player numbers			
+			
+		
+				System.out.println("ROUND " + roundNumber);
+				
+				if ((j == 1) && (model.isPlayerActive(j) == true)) {		// j needs to run through active player numbers	
+					System.out.println(model.getPlayerName(j) + "'s choice");
 					keyboardInput();										// not increment through index of activeplayers
 					gameActive =checkWinConditions();
 					highestRemainingPlayer = model.getHighestActivePlayer();
+					roundNumber++;		
 				} else if ((j != 1) && (model.isPlayerActive(j)) == true) {
+					System.out.println(model.getPlayerName((j)) + "'s choice");
 					numActive = model.getActivePlayerNum(model.getActivePlayers());
 					model.compareCards(model.aiChoice(j, model.getActivePlayers()), model.getActivePlayers());
 					gameActive = checkWinConditions();
 					highestRemainingPlayer = model.getHighestActivePlayer();
+					roundNumber++;
 				} else {
 					gameActive = checkWinConditions();
 					highestRemainingPlayer = model.getHighestActivePlayer();
 				}
-			} 
-		} while(gameActive == true || numActive > 1);
+				
+				if ((model.getLastRoundWinner(model.getActivePlayers()) != j) && (model.getLastRoundWinner(model.getActivePlayers()) != 0)) {
+					j = model.getLastRoundWinner(model.getActivePlayers());
+
+				}
+				
+				
+		} while(gameActive == true || numActive > 1);		
+
+
+		
 
 		System.out.println("Player " + model.getWinner() + " has won the game");
+		log.closeBuffer();
+		return;
 	}
 	
 	public void keyboardInput() {
-		System.out.print( "Your top card is: " + "\n" + model.getTopCard() + "\n \n");
+		System.out.print( "Your top card is: " + "\n" + model.getTopCard(1) + "\n \n");
 		System.out.println("Please select an attribute. 1 for Geographic, 2 for Duration, 3 for Population, 4 for Antiquity, 5 for Cool Factor.");
 		Scanner s = new Scanner(System.in);
 		int inputInt = s.nextInt();

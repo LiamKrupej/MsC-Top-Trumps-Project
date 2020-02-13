@@ -8,10 +8,10 @@ public class TTModel {
 	// class variable initialisation
 	private ArrayList<cardAttributes> Deck = new ArrayList<>();		// initial deck
 	private ArrayList<Player> playerList = new ArrayList<>();		// player list
-	private int winner = 0;											// winner used to store round winner
 	private int numOfPlayers = 0;									// number of currently active players
 	private int gameWinner = 0;										// stores player ID as game winner
 	private boolean gameActive = true;								// game state
+	private int lastRoundWinner;
 
 
 	// constructor for model, two arraylists for storing initial deck
@@ -39,6 +39,7 @@ public class TTModel {
 
 			Deck.add(new cardAttributes(NameFirst, NameLast, Size, Duration, Population, Antiquity, CoolFactor)); // adds each card incrementally
 		}																										  // to deck arraylist
+		civilizations.close();
 	}
 
 	// method for printing completed deck for testing
@@ -127,10 +128,10 @@ public class TTModel {
 	}
 
 	// get top card returns a read out of the players next card to provide visibility for attribute selection
-	public String getTopCard() {
-		if (playerList.get(1).hand.isEmpty() == false) {
+	public String getTopCard( int p) {
+		if (playerList.get(p).hand.isEmpty() == false) {
 			String s = null;
-			s = playerList.get(1).hand.get(0).toString();
+			s = playerList.get(p).hand.get(0).toString();
 			return s;
 		}
 		return null; 
@@ -155,6 +156,10 @@ public class TTModel {
 		return aP.size();
 	}
 
+	public String getPlayerHand(ArrayList<Player> aP, int p) {
+		return aP.get(p).printHand();
+	}
+	
 	public int compareCards(int a, ArrayList<Player> aP) {
 		int winner = 0;
 		int draw = 0;
@@ -336,6 +341,7 @@ public class TTModel {
 
 		}
 		addWinnerCards(winner, draw, activePlayers);
+		lastRoundWinner = winner;
 		return winner;
 	}
 
@@ -467,11 +473,11 @@ public class TTModel {
 	// method for finding highest player number still active in the game, used in conditional loop in controller
 	public int getHighestActivePlayer() {
 		int biggest = 0;
-		System.out.println("Player " + playerList.get(1).getPlayerNum() +  playerList.get(1).isPlayerActive());
-		System.out.println("Player " + playerList.get(2).getPlayerNum() +  playerList.get(2).isPlayerActive());
-		System.out.println("Player " + playerList.get(3).getPlayerNum() +  playerList.get(3).isPlayerActive());
-		System.out.println("Player " + playerList.get(4).getPlayerNum() +  playerList.get(4).isPlayerActive());
-		System.out.println("Player " + playerList.get(5).getPlayerNum() +  playerList.get(5).isPlayerActive());
+//		System.out.println("Player " + playerList.get(1).getPlayerNum() +  playerList.get(1).isPlayerActive());
+//		System.out.println("Player " + playerList.get(2).getPlayerNum() +  playerList.get(2).isPlayerActive());
+//		System.out.println("Player " + playerList.get(3).getPlayerNum() +  playerList.get(3).isPlayerActive());
+//		System.out.println("Player " + playerList.get(4).getPlayerNum() +  playerList.get(4).isPlayerActive());
+//		System.out.println("Player " + playerList.get(5).getPlayerNum() +  playerList.get(5).isPlayerActive());
 
 		for (int i = 1; i < playerList.size(); i++){
 			if (playerList.get(i).isPlayerActive() == true) {
@@ -483,5 +489,12 @@ public class TTModel {
 		return biggest;
 
 	}
+	
+	public String getPlayerName(int p) {
+		return playerList.get(p).getPlayerName();
+	}
 
+	public int getLastRoundWinner(ArrayList<Player> activePlayers) {
+		return playerList.get(lastRoundWinner).getPlayerNum();
+	}
 }
