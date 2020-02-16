@@ -125,6 +125,10 @@ public class TTController {
 
 		// prints winner from view
 		view.printWinner(model.getWinner());
+		System.out.print(model.getWinner());
+		System.out.print(model.getNumOfDraws());
+		System.out.print(model.getRoundsInGame());
+		System.out.print("\n" + "Player one wins " + model.get1rounds() + " Player two wins " + model.get2rounds() + " PLayer 3 wins " + model.get3rounds() + " Player 4 wins " + model.get4rounds() + " Player 5 wins " + model.get5rounds());
 		// printwinner of game once completed
 		if (testLog == true) {
 			log.printWinner(model.getWinner());
