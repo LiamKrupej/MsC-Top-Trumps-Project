@@ -12,6 +12,14 @@ public class TTModel {
 	private int gameWinner = 0;										// stores player ID as game winner
 	private boolean gameActive = true;								// game state
 	private int lastRoundWinner;
+	private int numofdraws; 
+	private int roundsingame = 0;
+	private int player1rounds = 0;
+	private int player2rounds = 0;
+	private int player3rounds = 0;
+	private int player4rounds = 0;
+	private int player5rounds = 0;
+	private int gamewinner = 0;
 
 
 
@@ -73,6 +81,34 @@ public class TTModel {
 		playerList.add(Three);
 		playerList.add(Four);
 		playerList.add(Five);
+	}
+	
+	public int getNumOfDraws() {
+		return numofdraws;
+	}
+
+	public int getRoundsInGame() {
+		return roundsingame;
+	}
+	
+	public int get1rounds() {
+		return player1rounds;
+	}
+	
+	public int get2rounds() {
+		return player2rounds;
+	}
+	public int get3rounds() {
+		return player3rounds;
+	}
+	
+	public int get4rounds() {
+		return player4rounds;
+	}
+	
+	public int get5rounds() {
+		return player5rounds;
+		
 	}
 
 	// Shuffles the arraylist containing the card objects, this create a randomised deck within the same arraylist
@@ -352,6 +388,8 @@ public class TTModel {
 		}
 		addWinnerCards(winner, draw, activePlayers);
 		lastRoundWinner = winner;
+		incrementPlayerRoundWin(winner);
+		roundsingame++;
 		return winner;
 	}
 
@@ -380,6 +418,7 @@ public class TTModel {
 
 
 		if (d == 1) {
+			numofdraws++;
 			numberActive = activePlayers.size();									// first if loop runs only if draw							
 			for (int i = 0; i < numberActive; i++) {								// runs for ever currently active player							
 				playerList.get(0).addToHand(activePlayers.get(i).getTopCard());
@@ -516,5 +555,19 @@ public class TTModel {
 	
 	public ArrayList<Player> getPlayerList() {
 		return playerList;										// once fully constructed
+	}
+	
+	public void incrementPlayerRoundWin(int a) {
+		if (a == 1) {
+			player1rounds++;
+		} else if (a == 2) {
+			player2rounds++;
+		} else if (a == 3) {
+			player3rounds++;
+		} else if (a == 4) {
+			player4rounds++;
+		} else if (a == 5) {
+			player5rounds++;
+		}
 	}
 }
