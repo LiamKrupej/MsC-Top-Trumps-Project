@@ -158,38 +158,46 @@ public class TTModel {
 		}
 		return activePlayers;										// once fully constructed
 	}
-
+	// returns the size of the active players array
 	public int getActivePlayerNum(ArrayList<Player> aP) {
 		return aP.size();
 	}
-
+	// gets the players hand as a String to output for testing
 	public String getPlayerHand(ArrayList<Player> aP, int p) {
 		return aP.get(p).printHand();
 	}
-	
+	/*
+	 *  The compare cards method finds the player with the highest value for the chosen category, a
+	 *  if two players have the same highest value then this results in a draw
+	 */
 	public int compareCards(int a, ArrayList<Player> aP) {
-		int winner = 0;
-		int draw = 0;
-		ArrayList<Player> activePlayers = aP;
-		ArrayList<Player> currentHighest = new ArrayList<Player>();
-
+		int winner = 0;		// int for storing winner
+		int draw = 0;		// int which marks draw status, 1 for true, 0 for false
+		ArrayList<Player> activePlayers = aP;						// the players currently active in the game
+		ArrayList<Player> currentHighest = new ArrayList<Player>();	// array list for storing
+		/*
+		 * The if loops check for the highest player by iterating through the active player arrayList and finding the two highest values
+		 * this allows us to check for a draw between the top two player card values
+		 * currently this outputs each players top card which should be part of the view
+		 * attempts to change this have affected the game logic significantly
+		 */
 		if (a == 1) {
 			for (int j = 0; j < activePlayers.size(); j++) {
 				System.out.println(String.format("%s has %s with size %01d", activePlayers.get(j).getPlayerName(), activePlayers.get(j).getCardName(), activePlayers.get(j).getGeo()));
 				if (j == 0) {
-					currentHighest.add(0, activePlayers.get(j));
+					currentHighest.add(0, activePlayers.get(j));		// adds the first two players to avoid out of bounds loops
 				} else if (j == 1) {
 					currentHighest.add(1, activePlayers.get(j));
 				}
 
-
+				// if current player being checked 
 				if (activePlayers.get(j).getGeo() >= currentHighest.get(0).getGeo()) {
 					currentHighest.add(1, currentHighest.get(0));
 					currentHighest.add(0, activePlayers.get(j));
 				}
 
 			}
-
+			// checks for draw otherwise outputs winner and card
 			if (currentHighest.get(0).getGeo() == currentHighest.get(1).getGeo()) {
 				System.out.println("There is a draw and the cards will be added to the communal pile");
 				draw = 1;
@@ -197,11 +205,11 @@ public class TTModel {
 				System.out.println(String.format("%s has the highest card for this round, with a value of %01d", currentHighest.get(0).getPlayerName(), currentHighest.get(0).getGeo()));	
 				draw = 0;			
 			}
-
+			// sets communal pile as current highest if draw to pass cards correctly
 			if (draw == 1) {
 				currentHighest.add(0, playerList.get(0));			
 			} else {
-				winner = currentHighest.get(0).getPlayerNum();
+				winner = currentHighest.get(0).getPlayerNum();	// or if winner is defined as currenthighest
 			}
 
 		}

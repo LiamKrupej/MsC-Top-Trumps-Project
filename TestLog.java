@@ -3,7 +3,10 @@ package commandline;
 import java.io.*; 
 
 public class TestLog {
-	
+	/*
+	 * testlog uses a filewriter and buffered writer to create a fresh test log each time the program is run with the test log
+	 * activity set to true
+	 */
 	 FileWriter writer = new FileWriter("/Users/benscott/Downloads/MScIT_TeamProject_TemplateProject 2/bin/testlog.log");
 	 BufferedWriter buffer = new BufferedWriter(writer);
 		 
@@ -25,6 +28,7 @@ public class TestLog {
 		buffer.write(deck + "\n" + "\n" + "\n");
 		buffer.write("-----------------------------------------------------------------------" + "\n");
 	}
+	// formatting for player hand surrounds
 	public void playerHandsSurround() throws IOException {
 		buffer.write("-----------------------------------------------------------------------" + "\n");
 		buffer.write("Player Hands" + "\n");
@@ -35,7 +39,7 @@ public class TestLog {
 		buffer.write(playerHand + "\n");
 
 	}
-	
+	//formatting for player hand surround out
 	public void playerHandsSurroundOut() throws IOException {
 		buffer.write("-----------------------------------------------------------------------" + "\n");
 	}
@@ -46,7 +50,7 @@ public class TestLog {
 		buffer.write(communalPile + "\n" + "\n");
 		buffer.write("-----------------------------------------------------------------------" + "\n");
 	}
-	
+	// formatting for top cards testlog output
 	public void topCardsSurround(int r) throws IOException {
 		buffer.write("-----------------------------------------------------------------------" + "\n");
 		buffer.write("ROUND " + r + "\n");
