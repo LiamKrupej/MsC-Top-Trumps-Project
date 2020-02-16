@@ -49,7 +49,7 @@ public class TestLog {
 	
 	public void topCardsSurround(int r) throws IOException {
 		buffer.write("-----------------------------------------------------------------------" + "\n");
-		buffer.write("ROUND " + r);
+		buffer.write("ROUND " + r + "\n");
 		buffer.write("Player top cards :" + "\n");
 	}
 	
@@ -60,7 +60,16 @@ public class TestLog {
 		buffer.write(topCard + "\n" + "\n");
 	}
 	
+
+	
+	public void printWinner(int winnerNum) throws IOException {
+		buffer.write("-----------------------------------------------------------------------" + "\n");
+		buffer.write("PLAYER " + winnerNum + " has won the game!" + "\n");
+		buffer.write("-----------------------------------------------------------------------" + "\n");
+	}
+	
 	public void closeBuffer() throws IOException {
 		buffer.close();
-	}
+	}	
+	
 }

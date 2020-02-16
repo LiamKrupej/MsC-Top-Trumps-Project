@@ -1,6 +1,5 @@
 package commandline;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
@@ -11,7 +10,8 @@ public class TTController {
 	private TTView	view;
 	private int numActive;
 	private boolean gameActive = true;
-	private boolean gameCompleted = false;
+	public boolean waitCMD = false;
+	private boolean lastRoundDraw = false;
 
 	public TTController(TTModel tModel, TTView tView) {
 		model = tModel;
@@ -33,6 +33,10 @@ public class TTController {
 			}
 			
 		model.createPlayers();
+		
+		view.promptPlayerNum();
+		model.setNumPlayers(selectNumberOfPlayers());
+		
 		model.numOfActive();
 		model.dealCards();
 		
@@ -49,10 +53,10 @@ public class TTController {
 		Random gameStarter = new Random();
 		int playerStarts = (gameStarter.nextInt(numActive) + 1);
 		int j = playerStarts;	
+		
 		do {
 
 			numActive = model.getActivePlayerNum(model.getActivePlayers()); 
-			int highestRemainingPlayer = model.getHighestActivePlayer();
 			
 			if (testLog == true) {
 				log.topCardsSurround(roundNumber);
@@ -61,28 +65,34 @@ public class TTController {
 				}
 			}
 		
-				System.out.println("ROUND " + roundNumber);
+				view.printRound(roundNumber);
+
 				
-				if ((j == 1) && (model.isPlayerActive(j) == true)) {		// j needs to run through active player numbers	
-					System.out.println(model.getPlayerName(j) + "'s choice");
-					keyboardInput();										// not increment through index of activeplayers
+				if ((j == 1) && (model.isPlayerActive(j) == true)) {			
+					view.usersChoice(model.getPlayerName(j));
+					int userChoice = keyboardInput();	
+					model.compareCards(userChoice, model.getActivePlayers());
 					gameActive =checkWinConditions();
-					highestRemainingPlayer = model.getHighestActivePlayer();
 					roundNumber++;		
 				} else if ((j != 1) && (model.isPlayerActive(j)) == true) {
-					System.out.println(model.getPlayerName((j)) + "'s choice");
+					view.aiTopCard(j, model.getTopCard(1));
+					view.usersChoice(model.getPlayerName(j));
 					numActive = model.getActivePlayerNum(model.getActivePlayers());
 					model.compareCards(model.aiChoice(j, model.getActivePlayers()), model.getActivePlayers());
 					gameActive = checkWinConditions();
-					highestRemainingPlayer = model.getHighestActivePlayer();
 					roundNumber++;
-				} else {
-					gameActive = checkWinConditions();
-					highestRemainingPlayer = model.getHighestActivePlayer();
 				}
 				
-				if ((model.getLastRoundWinner(model.getActivePlayers()) == 0) && (testLog == true)) {
+				gameActive = checkWinConditions();
+
+				
+				if (((model.getLastRoundWinner(model.getActivePlayers()) == 0) && (testLog == true)) || (lastRoundDraw = true)) {
 					log.printCommunalPile(model.getCommunalPile(), roundNumber);
+					if (lastRoundDraw = false) {
+						lastRoundDraw = true;
+					} else if ((lastRoundDraw = true) && (model.getLastRoundWinner(model.getActivePlayers()) != 0)) {
+						lastRoundDraw = false;
+					}
 				}
 				
 				if ((model.getLastRoundWinner(model.getActivePlayers()) != j) && (model.getLastRoundWinner(model.getActivePlayers()) != 0)) {
@@ -90,24 +100,30 @@ public class TTController {
 
 				}
 				
+				waitCMD = true;
+				waitInput(waitCMD);
 				
 		} while(gameActive == true || numActive > 1);		
 
 
 		
-
-		System.out.println("Player " + model.getWinner() + " has won the game");
+		view.printWinner(model.getWinner());
+		
+		if (testLog == true) {
+			log.printWinner(model.getWinner());
+		}
+		
 		log.closeBuffer();
 		return;
 	}
 	
-	public void keyboardInput() {
-		System.out.print( "Your top card is: " + "\n" + model.getTopCard(1) + "\n \n");
-		System.out.println("Please select an attribute. 1 for Geographic, 2 for Duration, 3 for Population, 4 for Antiquity, 5 for Cool Factor.");
+	public int keyboardInput() {
+		view.userTopCard(model.getTopCard(1));
+		view.promptCatSelect();
 		Scanner s = new Scanner(System.in);
 		int inputInt = s.nextInt();
 		s.nextLine();
-		model.compareCards(inputInt, model.getActivePlayers());
+		return inputInt;
 		
 	}
 
@@ -117,4 +133,23 @@ public class TTController {
 		numActive = model.getActivePlayerNum(model.getActivePlayers());
 		return gameActive;
 	}
+	
+	public void waitInput(boolean waitCMD){
+		if (waitCMD == true) {
+		   view.enterPrompt();
+		   Scanner prompt = new Scanner(System.in);
+		   prompt.nextLine();
+		}
+	}
+	
+	public boolean getWaitCMD() {
+		return waitCMD;
+	}
+	
+	public int selectNumberOfPlayers() {
+		Scanner s = new Scanner(System.in);
+		int numPlayers = s.nextInt();
+		return numPlayers;
+	}
+	
 }	

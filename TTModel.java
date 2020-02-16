@@ -14,6 +14,7 @@ public class TTModel {
 	private int lastRoundWinner;
 
 
+
 	// constructor for model, two arraylists for storing initial deck
 	// second arraylist contains the list of player objects
 	public TTModel() {
@@ -91,6 +92,12 @@ public class TTModel {
 		return null;	// otherwise returns null
 	}
 
+	public void setNumPlayers(int numPlayers) {
+		for (int i = 5; i > numPlayers; i--) {
+			playerList.get(i).setPlayerActivity(false);
+		}
+	}
+	
 	// find number of active players and sets class variable for initial shuffle
 	public void numOfActive() {
 		for (int i = 5; i > 1; i--) {							// loop decrements from maximum number of players
@@ -168,7 +175,6 @@ public class TTModel {
 
 		if (a == 1) {
 			for (int j = 0; j < activePlayers.size(); j++) {
-				// roundResults.add(activePlayers.get(j).getGeo());
 				System.out.println(String.format("%s has %s with size %01d", activePlayers.get(j).getPlayerName(), activePlayers.get(j).getCardName(), activePlayers.get(j).getGeo()));
 				if (j == 0) {
 					currentHighest.add(0, activePlayers.get(j));
@@ -204,7 +210,6 @@ public class TTModel {
 
 		if (a == 2) {
 			for (int j = 0; j < activePlayers.size(); j++) {
-				// roundResults.add(activePlayers.get(j).getGeo());
 				System.out.println(String.format("%s has %s with duration %01d", activePlayers.get(j).getPlayerName(), activePlayers.get(j).getCardName(), activePlayers.get(j).getDur()));
 
 				if (j == 0) {
@@ -239,7 +244,6 @@ public class TTModel {
 
 		if (a == 3) {
 			for (int j = 0; j < activePlayers.size(); j++) {
-				// roundResults.add(activePlayers.get(j).getGeo());
 				System.out.println(String.format("%s has %s with population %01d", activePlayers.get(j).getPlayerName(), activePlayers.get(j).getCardName(), activePlayers.get(j).getPop()));
 				if (j == 0) {
 					currentHighest.add(0, activePlayers.get(j));
@@ -274,7 +278,6 @@ public class TTModel {
 
 		if (a == 4) {
 			for (int j = 0; j < activePlayers.size(); j++) {
-				// roundResults.add(activePlayers.get(j).getGeo());
 				System.out.println(String.format("%s has %s with antiquity %01d", activePlayers.get(j).getPlayerName(), activePlayers.get(j).getCardName(), activePlayers.get(j).getAnt()));
 				if (j == 0) {
 					currentHighest.add(0, activePlayers.get(j));
@@ -309,7 +312,6 @@ public class TTModel {
 
 		if (a == 5) {
 			for (int j = 0; j < activePlayers.size(); j++) {
-				// roundResults.add(activePlayers.get(j).getGeo());
 				System.out.println(String.format("%s has %s with cool factor %01d", activePlayers.get(j).getPlayerName(), activePlayers.get(j).getCardName(), activePlayers.get(j).getCool()));
 				if (j == 0) {
 					currentHighest.add(0, activePlayers.get(j));
@@ -359,7 +361,6 @@ public class TTModel {
 
 		if (d == 0) {
 			int numComPile = playerList.get(0).hand.size();		// gets size of current communal pile hand
-			// System.out.println(numComPile + " NUMBER OF CARDS IN COMMUNAL PILE*******************************************");
 			while (numComPile > 0) {									// runs through every index of communal pile hand while containing cards
 				if (playerList.get(0).hand.isEmpty() == false) {		// only runs when pile has at least one card left
 					playerList.get(w).addToHand(playerList.get(0).getTopCard()); // adds to winners hand
@@ -367,7 +368,6 @@ public class TTModel {
 				}
 				numComPile = playerList.get(0).hand.size();
 			}
-			// System.out.println(numComPile + " NUMBER OF CARDS IN COMMUNAL PILE*******************************************");
 		}
 
 
@@ -389,9 +389,6 @@ public class TTModel {
 			}
 
 		}
-		// print statements used to test during build
-		// System.out.println("*communal pile cards*" + playerList.get(0).printHand() + " *end communal pile* ");
-		// System.out.println("*start winner hand*" + playerList.get(w).printHand() + " *end winner list* ");
 	}
 
 
@@ -448,7 +445,11 @@ public class TTModel {
 				gameWinner = activePlayers.get(i).getPlayerNum();	// they are set as the game winner through their player number		
 			}
 		}
-
+		
+		if (activePlayers.size() == 1) {
+			gameWinner = activePlayers.get(0).getPlayerNum();
+		}
+		
 		if (gameWinner != 0) {		// and if there is a game winner
 			gameActive = false;		// game state is set to false
 		}
@@ -480,27 +481,25 @@ public class TTModel {
 			}
 		}
 		
-
 		return biggest;
-
 	}
-	
+	// gets player name string from player object in player list array
 	public String getPlayerName(int p) {
 		return playerList.get(p).getPlayerName();
 	}
-
+	// gets playernumber int from last round winner class variable
 	public int getLastRoundWinner(ArrayList<Player> activePlayers) {
 		return playerList.get(lastRoundWinner).getPlayerNum();
 	}
-	
+	// returns the contents of the communal pile
 	public String getCommunalPile() {
 		return playerList.get(0).printHand();
 	}
-	
+	// gets the player number from position in activeplayer array, rather than playerlist
 	public int getPlayerNum(ArrayList<Player> activePlayers, int p) {
 		return activePlayers.get(p).getPlayerNum();
 	}
-	
+	// returns last round winner int as a string
 	public String getRoundWinner() {
 		return String.valueOf(lastRoundWinner);
 	}
