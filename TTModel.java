@@ -111,7 +111,6 @@ public class TTModel {
 	public void dealCards() {
 		int DR = Deck.size() / (numOfPlayers + 1);			// DR is dealer rounds - how many times every player is dealt a card
 		int rmndr = Deck.size() % (numOfPlayers + 1);		// remainder is used if there is an uneven distribution to deal additional cards
-		System.out.println("REMAINDER IS " + rmndr);
 		int deckIndex = 0;									// deck index increments every time a card is dealt
 		int LDP = 0;										// LDP is the last dealt player, in case remainder means additional cards need dealt
 															// ensure the current dealt player is next in line
