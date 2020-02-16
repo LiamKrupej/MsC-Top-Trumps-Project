@@ -12,6 +12,8 @@ public class TTController {
 	private boolean gameActive = true;	// game activity status
 	public boolean waitCMD = false;		// wait cmd for front end
 	private boolean lastRoundDraw = false;	// draw status from last round
+	private int aiChoice;
+	private int userChoice;
 
 	public TTController(TTModel tModel, TTView tView) {
 		model = tModel;
@@ -68,16 +70,23 @@ public class TTController {
 
 				// if j = 1 player turn
 				if ((j == 1) && (model.isPlayerActive(j) == true)) {			
-					view.usersChoice(model.getPlayerName(j));					// prints player who is chosing
-					int userChoice = keyboardInput();							// takes players keyboard input as choice
+					view.usersChoice(model.getPlayerName(j));					// prints player who is choosing
+					userChoice = keyboardInput();							// takes players keyboard input as choice
+						if (testLog == true) {
+							log.categoryAndValues(model.getActivePlayers(), userChoice);
+						}
 					model.compareCards(userChoice, model.getActivePlayers());	// compares all cards to find winner
 					gameActive =checkWinConditions();							// checks win conditions
 					roundNumber++;												// increments round number
 				} else if ((j != 1) && (model.isPlayerActive(j)) == true) {		// if j is not 1, ai choice used
-					view.aiTopCard(j, model.getTopCard(1));						// shows ai players top card
+					view.aiTopCard(j, model.getTopCard(model.getPlayerNum(model.getPlayerList(), j)));						// shows ai players top card
 					view.usersChoice(model.getPlayerName(j));					// shows ai players choice of category
 					numActive = model.getActivePlayerNum(model.getActivePlayers());		// gets number active
-					model.compareCards(model.aiChoice(j, model.getActivePlayers()), model.getActivePlayers());	// compares all players top cards in round
+					aiChoice = model.aiChoice(j, model.getActivePlayers());
+						if (testLog == true) {
+							log.categoryAndValues(model.getActivePlayers(), aiChoice);
+						}
+					model.compareCards(aiChoice, model.getActivePlayers());	// compares all players top cards in round
 					gameActive = checkWinConditions();							// checks win conditions
 					roundNumber++;												// increments round number by 1
 				}	
@@ -93,6 +102,15 @@ public class TTController {
 						lastRoundDraw = false;
 					}
 				}
+				
+				if (testLog == true) {			// if test log is true prints each players hands after each round
+					log.playerHandsSurround();	// surrounds for formatting
+					for (int i = 0; i < model.getActivePlayerNum(model.getActivePlayers()); i++) {
+						log.printPlayerHands(model.getPlayerHand(model.getActivePlayers(), i), (model.getPlayerNum(model.getActivePlayers(), i)));
+					}
+					log.playerHandsSurroundOut();
+				}
+			
 				// prints to test log last round winner
 				if ((model.getLastRoundWinner(model.getActivePlayers()) != j) && (model.getLastRoundWinner(model.getActivePlayers()) != 0)) {
 					j = model.getLastRoundWinner(model.getActivePlayers());

@@ -111,6 +111,7 @@ public class TTModel {
 	public void dealCards() {
 		int DR = Deck.size() / (numOfPlayers + 1);			// DR is dealer rounds - how many times every player is dealt a card
 		int rmndr = Deck.size() % (numOfPlayers + 1);		// remainder is used if there is an uneven distribution to deal additional cards
+		System.out.println("REMAINDER IS " + rmndr);
 		int deckIndex = 0;									// deck index increments every time a card is dealt
 		int LDP = 0;										// LDP is the last dealt player, in case remainder means additional cards need dealt
 															// ensure the current dealt player is next in line
@@ -126,7 +127,7 @@ public class TTModel {
 
 		if (rmndr != 0) {							// only runs in cases where remainder is not equal to 0, in the case of 5 players and
 			for (int k = 0; k < rmndr; k++)			// 40 cards this only occurs once, when there are 3 players
-				if (LDP == 5) {						// **** incorrect ****** needs to be based on numOfPLayers
+				if (LDP == numOfPlayers) {						// **** incorrect ****** needs to be based on numOfPLayers
 					LDP = 1;
 				}
 			playerList.get(LDP + 1).hand.add(Deck.get(deckIndex));
@@ -412,19 +413,19 @@ public class TTModel {
 		int biggest = Math.max(cardGeo,Math.max(cardDur,Math.max(cardPop,Math.max(cardAnt,cardCool))));	// returns highest value card
 		// the next series of if conditionals checks which value is highest and returns, prioritising 1 to 5
 		if (cardGeo == biggest) {
-			System.out.println("Player " + p + " has chosen Geographic size");
+			System.out.println("Player " + p + " has chosen Geographic size" + "\n");
 			return 1;
 		} else if (cardDur == biggest) {
-			System.out.println("Player " + p + " has chosen Duration");
+			System.out.println("Player " + p + " has chosen Duration" + "\n");
 			return 2;
 		} else if (cardPop == biggest) {
-			System.out.println("Player " + p + " has chosen Population");
+			System.out.println("Player " + p + " has chosen Population" + "\n");
 			return 3;
 		} else if (cardAnt == biggest) {
-			System.out.println("Player " + p + " has chosen Antiquity");
+			System.out.println("Player " + p + " has chosen Antiquity" + "\n");
 			return 4;
 		} else {
-			System.out.println("Player " + p + " has chosen Cool Factor");
+			System.out.println("Player " + p + " has chosen Cool Factor" + "\n");
 			return 5;
 		}
 	
@@ -440,7 +441,9 @@ public class TTModel {
 		for (int i = 0; i < activePlayers.size(); i++) {
 			if (activePlayers.get(i).hand.isEmpty() == true) {		// if a players hand arraylist is empty
 				activePlayers.get(i).setPlayerActivity(false);		// their active state is set to false
+				System.out.println(activePlayers.get(i).getPlayerName() + " has been eliminated!");
 				activePlayers.remove(i);							// and the player is removed from the active players list
+
 			}
 		}
 
@@ -510,5 +513,9 @@ public class TTModel {
 	// returns last round winner int as a string
 	public String getRoundWinner() {
 		return String.valueOf(lastRoundWinner);
+	}
+	
+	public ArrayList<Player> getPlayerList() {
+		return playerList;										// once fully constructed
 	}
 }
