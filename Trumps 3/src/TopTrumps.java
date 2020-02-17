@@ -1,14 +1,15 @@
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.SQLException;
 
-import commandline.TopTrumpsCLIApplication;
+import Model.TopTrumpsCLIApplication;
+
 import online.TopTrumpsOnlineApplication;
 
 public class TopTrumps {
 
 	/** This is the main class for the TopTrumps Applications
 	 * @throws IOException */
-	public static void main(String[] args) throws IOException, SQLException {
+	public static void main(String[] args) throws IOException {
 
 		System.out.println("--------------------");
 		System.out.println("--- Top Trumps   ---");
@@ -17,7 +18,7 @@ public class TopTrumps {
 		// command line switches
 		boolean onlineMode = false;
 		boolean commandLineMode = true;
-		boolean printTestLog = false;
+		boolean printTestLog = true;
 
 		// check the command line for what switches are active
 		for (String arg : args) {

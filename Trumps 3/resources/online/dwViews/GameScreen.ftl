@@ -1,4 +1,4 @@
-html>
+<html>
 
 <head>
     <!-- Web page title -->
@@ -168,6 +168,7 @@ html>
               </div>
           </div>
           <button class="btn" onclick="getAttributes() + player2() + player3()  + player4() + player5();">Play<span id="Play"></span></button>
+          <button class="btn2" onclick="nextRound() + getAttributes();" value="1" >Next Round<span =id="Round"></span></button>
           <h6 class="h6"><span id="Winner"></span></h6>
           </div>
       </div>
@@ -253,8 +254,6 @@ html>
                     $("#player1").text(" " + response[5]);
                     $('.list-group-item2').hide();
                     $('.card-title1').hide();
-                    $('.list-group-item3').prop('disabled', false);
-                    $('.list-group-item2').prop('disabled', false);
 
 
                 }
@@ -540,6 +539,34 @@ html>
 
                 // We have done everything we need to prepare the CORS request, so send it
                 xhr.send();
+
+             }
+
+             // This calls the helloJSONList REST method from TopTrumpsRESTAPI
+             function nextRound() {
+
+                 // First create a CORS request, this is the message we are going to send (a get request in this case)
+                 var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/nextRound"); // Request type and URL
+
+                 // Message is not sent yet, but we can check that the browser supports CORS
+                 if (!xhr) {
+                    alert("CORS not supported");
+
+                 }
+
+                 // THIS IS WHERE THE MAGIC HAPPENS!!!!!!
+                 xhr.onload = function(e) {
+                     var responseText = xhr.response; // the text of the response
+                     var response11 = JSON.parse(responseText);
+
+                     $('.list-group-item2').hide();
+                     $('.card-title1').hide();
+
+
+                 };
+
+                 // We have done everything we need to prepare the CORS request, so send it
+                 xhr.send();
 
              }
 

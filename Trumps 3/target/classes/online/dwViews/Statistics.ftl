@@ -30,108 +30,90 @@
 
                body {
 
-                   background-image: url(https://cdn.pixabay.com/photo/2016/08/20/16/26/scotland-1607908_1280.jpg);
+                   background-image: url(https://cdn.pixabay.com/photo/2016/11/22/19/17/architecture-1850129_1280.jpg);
                    background-repeat: no-repeat;
                    background-position: 0 0;
-                   background-size: cover%;
-               }
-
-
-               .card {
-
-                    opacity: 0.9;
-                    min-width: 250px;
-                    max-width: 250px;
-                    padding-left:1px;
-               }
-
-               .container {
-
-                   padding-top:10px;
-                   padding-left:1px;
-
+                   background-size: 100%;
 
                }
 
-               .btn{
-                    position: absolute;
-                    top: 85%;
-                    background-color: #f1f1f1;
-                    color: black;
-                    font-size: 16px;
-                    padding: 16px 30px;
-                    border: none;
-                    cursor: pointer;
-                    border-radius: 5px;
-                    text-align: center;
-                    opacity: 0.9;
+               th {
 
-              }
+                 color: black;
+
+               }
+
+           .btn{
+           position: absolute;
+           top: 85%;
+           background-color: #f1f1f1;
+           color: black;
+           font-size: 16px;
+           padding: 16px 30px;
+           border: none;
+           cursor: pointer;
+           border-radius: 5px;
+           text-align: center;
+           opacity: 0.9;
+
+            }
 
   </style>
 
 <body onload="initalize()"> <!-- Call the initalize method when the page loads -->
+
 <div class="container">
-    <div class="card-deck">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title1">Game Stats<span id="GameStats"><br><br><br><br></h5>
-                <div class="list-group2">
-                    <h6 class="list-group-item2 list-group-item-action">Player 1 Rounds Won:<span id="p1Rounds"></span></h6>
-                    <h6 class="list-group-item2 list-group-item-action">Computer 1 Rounds Won:<span id="c1Rounds"></h6>
-                    <h6 class="list-group-item2 list-group-item-action">Computer 2 Rounds Won:<span id="c2Rounds"></span></h6>
-                    <h6 class="list-group-item2 list-group-item-action">Computer 3 Rounds Won:<span id="c3Rounds"></span></h6>
-                    <h6 class="list-group-item2 list-group-item-action">Computer 4 Rounds Won:<span id="c4Rounds"></span></h6>
-                </div>
-            </div>
-            <div class="card-footer">
-                <small class="text-muted">Historic Stats</small>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title1"> Historic Stats<span id="player2"><br><br><br><br></h5>
-                <div class="list-group2">
-                    <h6 class="list-group-item2 list-group-item-action">Total Games:<span id="TotalGames"></span></h6>
-                    <h6 class="list-group-item2 list-group-item-action">Human Wins:<span id="HumanWins"></h6>
-                    <h6 class="list-group-item2 list-group-item-action">AI Wins:<span id="AIWins"></span></h6>
-                    <h6 class="list-group-item2 list-group-item-action">Draws:<span id="Draws"></span></h6>
-                    <h6 class="list-group-item2 list-group-item-action">Longest Game:<span id="Longest Game"></span></h6>
-                </div>
-            </div>
-            <div class="card-footer">
-                <small class="text-muted">Game Stats</small>
-            </div>
-        </div>
 
     </div>
-</div>
+            	<div class="container">
+        		<table class="table" id="table1">
+        		<div class="container">
+        		<button class="btn" style="left: 7%;" onclick="window.location.href ='http://localhost:7777/toptrumps';">Back</button>
+
+          <thead>
+            <tr>
+              <th scope="col">Total of Games</th> "class="list-group-item3 list-group-item-action">Size:<span id="totalgames"></span>
+              <th scope="col">Human Wins</th>
+              <th scope="col">AI Wins</th>
+              <th scope="col">Draws Per Game</th>
+              <th scope="col">Longest Game</th>
+              <th scope="col">Rounds Won Per Player</th>
+              <th scope="col">Winner of Game </th>
+              <th scope="col">Number of Draws</th>
+              <th scope="col">Longest Game</th>
+
+            </tr>
+          </thead>
+
+        </table>
+
+		</div>
+
 		<script type="text/javascript">
 
 			// Method that is called on page load
 			function initalize() {
 
-                LastGameStats();
+				// --------------------------------------------------------------------------
+				// You can call other methods you want to run when the page first loads here
+				// --------------------------------------------------------------------------
 
 			}
+			
+			getLastGameStats();
+			getOverallStats();
 
-			// -----------------------------------------
-			// Add your other Javascript methods Here
-			// -----------------------------------------
 
-			// This is a reusable method for creating a CORS request. Do not edit this.
+			
 			function createCORSRequest(method, url) {
   				var xhr = new XMLHttpRequest();
   				if ("withCredentials" in xhr) {
 
-    				// Check if the XMLHttpRequest object has a "withCredentials" property.
-    				// "withCredentials" only exists on XMLHTTPRequest2 objects.
     				xhr.open(method, url, true);
 
   				} else if (typeof XDomainRequest != "undefined") {
 
-    				// Otherwise, check if XDomainRequest.
-    				// XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+ 
     				xhr = new XDomainRequest();
     				xhr.open(method, url);
 
@@ -146,40 +128,54 @@
 
 		</script>
 
-		<!-- Here are examples of how to call REST API Methods -->
 		<script type="text/javascript">
 
-			  // This calls the helloJSONList REST method from TopTrumpsRESTAPI
-             function LastGameStats() {
+			
+			function helloJSONList() {
 
-                // First create a CORS request, this is the message we are going to send (a get request in this case)
-                var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getLastGameStats"); // Request type and URL
+			
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/helloJSONList"); // Request type and URL
 
-                // Message is not sent yet, but we can check that the browser supports CORS
-                if (!xhr) {
-                    alert("CORS not supported");
+		
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
 
-                }
+				xhr.onload = function(e) {
+ 					var responseText = xhr.response; 
+					var response = JSON.parse(responseText);
+					
+					$("#totalgames").text(" " + response[0]);
+					
+				};
 
-                // THIS IS WHERE THE MAGIC HAPPENS!!!!!!
-                xhr.onload = function(e) {
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();
+			}
 
-                    var responseText = xhr.response; // the text of the response
-                    var response15 = JSON.parse(responseText);
+			// This calls the helloJSONList REST method from TopTrumpsRESTAPI
+			function helloWord(word) {
 
-                    $("#p1Rounds").text(response15[0]);
-                    $("#c1Rounds").text(response15[1]);
-                    $("#c2Rounds").text(response15[2]);
-                    $("#c3Rounds").text(response15[3]);
-                    $("#c4Rounds").text(response15[4]);
+				// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/helloWord?Word="+word); // Request type and URL+parameters
 
-                };
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
 
-                // We have done everything we need to prepare the CORS request, so send it
-                xhr.send();
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives
+				xhr.onload = function(e) {
+ 					var responseText = xhr.response; // the text of the response
+					alert(responseText); // lets produce an alert
+				};
 
-             }
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();
+			}
 
-    </script>
-</body>
+		</script>
+
+		</body>
 </html>

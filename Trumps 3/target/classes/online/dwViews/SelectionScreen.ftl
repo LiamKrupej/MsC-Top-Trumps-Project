@@ -1,4 +1,4 @@
-<html>
+l<html>
 <head>
 <!-- Web page title -->
 <title>Top Trumps - Home</title>
@@ -18,7 +18,7 @@
             .container {
               position: relative;
               width: 100%;
-              max-width: 400px;
+              max-width: 100%;
 
             }
 
@@ -81,7 +81,9 @@
                       }
 
            html, body {
+               margin: 0;
                min-height: 100%;
+               width: 100%;
 
            }
 
@@ -93,7 +95,7 @@
 
            }
 
-           @media (min-width: 1120px), (min-height: 630px) {
+           @media (min-width: 100%), (min-height: 100%) {
                body { background-size: auto; }
            }
 
@@ -181,5 +183,3 @@
     </script>
 	</body>
 </html>
-
-
